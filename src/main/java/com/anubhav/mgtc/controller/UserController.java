@@ -17,7 +17,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 public class UserController {
 
 	@Autowired UserService UserService;
-	@RequestMapping("/")
+	@RequestMapping("")
 	public @ResponseBody JsonNode getUsers() throws JsonProcessingException {
 		return UserService.getAllUsers();
 	}
