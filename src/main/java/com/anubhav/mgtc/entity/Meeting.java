@@ -4,7 +4,7 @@ import java.sql.Date;
 
 public class Meeting {
 	
-	private int id;
+	private Integer id;
 	private Date timing;
 	private String ttmName;
 	private String ttmId;
@@ -21,10 +21,11 @@ public class Meeting {
 	private String theme;
 	private String venue;
 	
-	public int getId() {
+	
+	public Integer getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	public Date getTiming() {

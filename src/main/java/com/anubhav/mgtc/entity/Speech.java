@@ -3,7 +3,7 @@ package com.anubhav.mgtc.entity;
 import java.sql.Date;
 
 public class Speech {
-	private int id;
+	private Integer id;
 	private int meetingId;
 	private String projectName;
 	private String speakerName;
@@ -13,10 +13,12 @@ public class Speech {
 	private Date date;
 	private double timeMin;
 	private double timeMax;
-	public int getId() {
+		
+	
+	public Integer getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	public int getMeetingId() {

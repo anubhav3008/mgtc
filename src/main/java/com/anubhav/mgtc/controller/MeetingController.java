@@ -28,7 +28,7 @@ public class MeetingController {
 	}
 	
 	@RequestMapping(path="/addOrUpdate", method= {RequestMethod.POST})
-	public @ResponseBody JsonNode addOrUpdate(@RequestBody Meeting meeting) {
+	public @ResponseBody JsonNode addOrUpdate(@RequestBody JsonNode meeting) {
 		return meetingService.addOrUpdate(meeting);
 	}
 }

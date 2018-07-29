@@ -1,5 +1,7 @@
 package com.anubhav.mgtc.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,23 +29,10 @@ public class GoalService {
 		return response;
 	}
 	
-	public JsonNode addGoal(Goal goal) {
+	public JsonNode addorUpdateGoal(List<Goal> goals) {
 		ObjectNode response = mapper.createObjectNode();
 		try {
-			response.putPOJO("data", goalDao.addGoal(goal));
-			response.put("success", true);
-		} catch (Exception e) {
-			e.printStackTrace();
-			response.put("success", false);
-			response.put("error", e.getMessage());
-		}
-		return response;
-	}
-	
-	public JsonNode updateGoal(Goal goal) {
-		ObjectNode response = mapper.createObjectNode();
-		try {
-			response.putPOJO("data", goalDao.updateGoal(goal));
+			goalDao.addorUpdateGoal((goals));
 			response.put("success", true);
 		} catch (Exception e) {
 			e.printStackTrace();

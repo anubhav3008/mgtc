@@ -1,14 +1,18 @@
 package com.anubhav.mgtc.dao;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionException;
+import java.util.stream.Collectors;
 
 import org.jdbi.v3.core.extension.NoSuchExtensionException;
 import org.jdbi.v3.spring4.JdbiFactoryBean;
 import org.jdbi.v3.sqlobject.config.RegisterRowMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.customizer.BindMethods;
+import org.jdbi.v3.sqlobject.statement.SqlBatch;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
-import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,12 +26,23 @@ public class SpeechDao {
 		return	jdbiFactoryBean.getObject().onDemand(SpeechJdbiDao.class);	
 	}
 	
-	public int updateSpeech(Speech speech) throws NoSuchExtensionException, Exception {
-		return getSpeechJdbiDao().updateSpeech(speech);
-	}
-	
-	public int addSpeech(Speech speech) throws NoSuchExtensionException, Exception {
-		return getSpeechJdbiDao().addSpeech(speech);
+	public void addOrupdateSpeech(List<Speech> speeches) throws NoSuchExtensionException, Exception {
+		CompletableFuture<Void> updates= CompletableFuture.runAsync(()->  {
+			try {
+				getSpeechJdbiDao().updateSpeeches(speeches.stream().filter(speech->Objects.nonNull(speech.getId())).collect(Collectors.toList()));
+			}catch (Exception e) {
+				throw new CompletionException(e);
+			}
+		});
+		CompletableFuture<Void> adds=  CompletableFuture.runAsync(()->{
+			try {
+				getSpeechJdbiDao().addSpeeches(speeches.stream().filter(speech-> Objects.isNull(speech.getId())).collect(Collectors.toList()));
+			} catch (Exception e) {
+				throw new CompletionException(e);
+			}
+		});
+		updates.get();
+		adds.get();
 	}
 	
 	public List<Speech> getSpeechByMeetingId(int MeetingId) throws NoSuchExtensionException, Exception{
@@ -40,7 +55,7 @@ public class SpeechDao {
 		@RegisterRowMapper(SpeechMapper.class)
 		public List<Speech> getSpeechByMeetingId( @Bind("id")  int  id); 
 		
-		@SqlUpdate("insert into speeches (id, meeting_id, project_name, speaker_name, speaker_id, evaluator_name, evaluator_id, time_min, time_max, date) " + 
+		@SqlBatch("insert into speeches (id, meeting_id, project_name, speaker_name, speaker_id, evaluator_name, evaluator_id, time_min, time_max, date) " + 
 				"values("
 				+ ":getId,"
 				+ ":getMeetingId,"
@@ -53,20 +68,21 @@ public class SpeechDao {
 				+ ":getTimeMax,"
 				+ ":getDate)"
 				+ " on conflict (id) "
-				+ "do update set "
-				+ "meeting_id=EXCLUDED.meeting_id,"
-				+ "project_name=EXCLUDED.project_name,"
-				+ "speaker_name=EXCLUDED.speaker_name,"
-				+ "speaker_id=EXCLUDED.speaker_id,"
-				+ "evaluator_name=EXCLUDED.evaluator_name,"
-				+ "evaluator_id=EXCLUDED.evaluator_id,"
-				+ "date=EXCLUDED.date,"
-				+ "time_min=EXCLUDED.time_min,"
-				+ "time_max=EXCLUDED.time_max")
-		public int updateSpeech(@BindMethods Speech speech);
+				+ " do update set "
+				+ " meeting_id=EXCLUDED.meeting_id,"
+				+ " project_name=EXCLUDED.project_name,"
+				+ " speaker_name=EXCLUDED.speaker_name,"
+				+ " speaker_id=EXCLUDED.speaker_id,"
+				+ " evaluator_name=EXCLUDED.evaluator_name,"
+				+ " evaluator_id=EXCLUDED.evaluator_id,"
+				+ " date=EXCLUDED.date,"
+				+ " time_min=EXCLUDED.time_min,"
+				+ " time_max=EXCLUDED.time_max"
+				)
+		public int[] updateSpeeches(@BindMethods List<Speech> speeches);
 		
 
-		@SqlUpdate("insert into speeches (meeting_id, project_name, speaker_name, speaker_id, evaluator_name, evaluator_id, date, time_min, time_max) " + 
+		@SqlBatch("insert into speeches (meeting_id, project_name, speaker_name, speaker_id, evaluator_name, evaluator_id, date, time_min, time_max) " + 
 				"values("
 				+ ":getMeetingId,"
 				+ ":getProjectName,"
@@ -77,7 +93,7 @@ public class SpeechDao {
 				+ ":getDate,"
 				+ ":getTimeMin,"
 				+ ":getTimeMax)")
-		public int addSpeech(@BindMethods Speech speech);
+		public int[] addSpeeches(@BindMethods List<Speech> speeches);
 		
 		
 		

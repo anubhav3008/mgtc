@@ -1,7 +1,8 @@
 package com.anubhav.mgtc.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,15 +19,11 @@ import com.fasterxml.jackson.databind.JsonNode;
 public class SpeechController {
 	@Autowired SpeechService speechService;
 	
-	@RequestMapping(path="/add", method=RequestMethod.POST)
-	public @ResponseBody JsonNode addSpeech(@RequestBody Speech speech) {
-		return speechService.addSpeech(speech);
+	@RequestMapping(path="/addOrUpdate", method=RequestMethod.POST)
+	public @ResponseBody JsonNode addSpeech(@RequestBody List<Speech> speech) {
+		return speechService.addOrupdateSpeech(speech);
 	}
-	
-	@RequestMapping(path="/update", method=RequestMethod.PUT)
-	public @ResponseBody JsonNode updateSpeech(@RequestBody Speech speech) {
-		return speechService.updateSpeech(speech);
-	}
+
 	@RequestMapping(path="",method=RequestMethod.GET)
 	public @ResponseBody JsonNode getSpeechByMeetingId(@RequestParam("meetingId")  int id) {
 		return speechService.getSpeechByMeetingId(id);

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.anubhav.mgtc.dao.MeetingDao;
+import com.anubhav.mgtc.dao.MeetingJsonDao;
 import com.anubhav.mgtc.entity.Meeting;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -13,6 +14,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 public class MeetingService {
 	ObjectMapper mapper = new ObjectMapper();
 	@Autowired MeetingDao meetingDao;
+	@Autowired MeetingJsonDao meetingJsonDao;
+
 	public JsonNode getAllMeetings() {
 		ObjectNode response = mapper.createObjectNode();
 		try {
@@ -29,7 +32,19 @@ public class MeetingService {
 	public JsonNode getMeeting(int id) {
 		ObjectNode response = mapper.createObjectNode();
 		try {
-			response.putPOJO("data", meetingDao.getMeeting(id));
+			response.set("data",  meetingJsonDao.getMeetingJson(id));
+			response.put("success", true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.put("success", false);
+			response.put("error", e.getMessage());
+		}
+		return response;
+	}
+	public JsonNode addOrUpdate(Meeting meeting) {
+		ObjectNode response = mapper.createObjectNode();
+		try {
+			response.putPOJO("data", meetingDao.addOrUpdateMeeting(meeting));
 			response.put("success", true);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -39,10 +54,10 @@ public class MeetingService {
 		return response;
 	}
 	
-	public JsonNode addOrUpdate(Meeting meeting) {
+	public JsonNode addOrUpdate(JsonNode meeting) {
 		ObjectNode response = mapper.createObjectNode();
 		try {
-			response.putPOJO("data", meetingDao.addOrUpdateMeeting(meeting));
+			meetingJsonDao.addMeetingJSON(meeting);
 			response.put("success", true);
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -1,5 +1,8 @@
 package com.anubhav.mgtc.service;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,10 +17,10 @@ public class SpeechService {
 	@Autowired SpeechDao speechDao;
 	ObjectMapper mapper = new ObjectMapper();
 
-	public JsonNode addSpeech(Speech speech) {
+	public JsonNode addOrupdateSpeech(List<Speech> speeches) {
 		ObjectNode response = mapper.createObjectNode();
 		try {
-			response.putPOJO("data", speechDao.addSpeech(speech));
+			speechDao.addOrupdateSpeech(speeches);
 			response.put("success", true);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -26,18 +29,7 @@ public class SpeechService {
 		}
 		return response;
 	}
-	public JsonNode updateSpeech(Speech speech) {
-		ObjectNode response = mapper.createObjectNode();
-		try {
-			response.putPOJO("data", speechDao.updateSpeech(speech));
-			response.put("success", true);
-		} catch (Exception e) {
-			e.printStackTrace();
-			response.put("success", false);
-			response.put("error", e.getMessage());
-		}
-		return response;
-	}
+
 	public JsonNode getSpeechByMeetingId(int id) {
 		ObjectNode response = mapper.createObjectNode();
 		try {
