@@ -96,17 +96,19 @@ public class  MeetingJsonDao {
 		JsonNode speech = meetingJson.get("speech");
 		if(Objects.nonNull(speech)) {
 			List<Speech> speechDOs= Arrays.asList(mapper.treeToValue(speech, Speech[].class));
-			speechDao.addOrupdateSpeech(speechDOs);
+			if(Objects.nonNull(speechDOs)) {
+				speechDOs.stream().forEach(speech1 -> speech1.setMeetingId(meetingJson.get("meeting").get("id").asInt()));
+				speechDao.addOrupdateSpeech(speechDOs);
+			}
 		}
 
 	}
 
 	private void addOrupdateGoals(JsonNode meetingJson) throws NoSuchExtensionException, Exception {
 		JsonNode goal = meetingJson.get("goal");
-
-
 		if(Objects.nonNull(goal)) {
 			List<Goal> goalDOs= Arrays.asList( mapper.treeToValue(goal, Goal[].class));
+			goalDOs.stream().forEach(goal1 -> goal1.setMeetingId(meetingJson.get("meeting").get("id").asInt()));
 			goalDao.addorUpdateGoal(goalDOs);
 		}
 

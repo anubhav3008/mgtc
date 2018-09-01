@@ -26,22 +26,17 @@ public class GoalDao {
 		return	jdbiFactoryBean.getObject().onDemand(GoalJdbiDao.class);	
 	}
 	public void addorUpdateGoal(List<Goal> goals) throws NoSuchExtensionException, Exception {
-		CompletableFuture<Void> updates=  CompletableFuture.runAsync(()->  {
 			try {
-				getGoalJdbiDao().updateGoals(goals.stream().filter(goal->Objects.nonNull(goal.getId())).collect(Collectors.toList()));
+				List<Integer> meetingIds=  goals.stream().filter(goal->Objects.nonNull(goal.getMeetingId())).map(Goal::getMeetingId).collect(Collectors.toList());
+				getGoalJdbiDao().deleteGoalsByMeetingId(meetingIds);
 			} catch (Exception e) {
 				throw new CompletionException(e);
 			}
-		}); 
-		CompletableFuture<Void> adds=  CompletableFuture.runAsync(()->{
 			try {
-				getGoalJdbiDao().addGoals(goals.stream().filter(goal->Objects.isNull(goal.getId())).collect(Collectors.toList()));
+				getGoalJdbiDao().addGoals(goals);
 			} catch (Exception e) {
 				throw new CompletionException(e);
 			}
-		});
-		updates.get();
-		adds.get();
 	}
 	
 	public List<Goal> getGoalByMeetingId(int id) throws NoSuchExtensionException, Exception{
@@ -68,6 +63,10 @@ public class GoalDao {
 		@SqlQuery("select * from goals where meeting_id=:id")
 		@RegisterRowMapper(GoalMapper.class)
 		public List<Goal> getGoalByMeetingId(@Bind("id")int id);
+
+
+		@SqlBatch("delete from goals where meeting_id = :ids")
+		public int[] deleteGoalsByMeetingId(@Bind("ids") List<Integer> id);
 		
 		
 	}

@@ -13,6 +13,9 @@ import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.customizer.BindMethods;
 import org.jdbi.v3.sqlobject.statement.SqlBatch;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
+import org.jdbi.v3.sqlobject.statement.SqlUpdate;
+import org.skife.jdbi.v2.sqlobject.stringtemplate.UseStringTemplate3StatementLocator;
+import org.skife.jdbi.v2.unstable.BindIn;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,29 +30,25 @@ public class SpeechDao {
 	}
 	
 	public void addOrupdateSpeech(List<Speech> speeches) throws NoSuchExtensionException, Exception {
-		CompletableFuture<Void> updates= CompletableFuture.runAsync(()->  {
+
 			try {
-				getSpeechJdbiDao().updateSpeeches(speeches.stream().filter(speech->Objects.nonNull(speech.getId())).collect(Collectors.toList()));
+				List<Integer> meetingIds=  speeches.stream().filter(speech->Objects.nonNull(speech.getMeetingId())).map(Speech::getMeetingId).collect(Collectors.toList());
+				getSpeechJdbiDao().deleteSpeechesByMeetingId(meetingIds);
 			}catch (Exception e) {
 				throw new CompletionException(e);
 			}
-		});
-		CompletableFuture<Void> adds=  CompletableFuture.runAsync(()->{
 			try {
-				getSpeechJdbiDao().addSpeeches(speeches.stream().filter(speech-> Objects.isNull(speech.getId())).collect(Collectors.toList()));
+				getSpeechJdbiDao().addSpeeches(speeches);
 			} catch (Exception e) {
 				throw new CompletionException(e);
 			}
-		});
-		updates.get();
-		adds.get();
 	}
 	
 	public List<Speech> getSpeechByMeetingId(int MeetingId) throws NoSuchExtensionException, Exception{
 		return getSpeechJdbiDao().getSpeechByMeetingId(MeetingId);
 	}
-	
-	
+
+	@UseStringTemplate3StatementLocator
 	interface SpeechJdbiDao{
 		@SqlQuery("select * from speeches where meeting_id = :id")
 		@RegisterRowMapper(SpeechMapper.class)
@@ -94,6 +93,9 @@ public class SpeechDao {
 				+ ":getTimeMin,"
 				+ ":getTimeMax)")
 		public int[] addSpeeches(@BindMethods List<Speech> speeches);
+
+		@SqlBatch("delete from speeches where meeting_id = :ids")
+		public int[] deleteSpeechesByMeetingId(@Bind("ids") List<Integer> id);
 		
 		
 		
