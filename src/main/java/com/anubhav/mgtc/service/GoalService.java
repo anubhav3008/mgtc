@@ -32,7 +32,7 @@ public class GoalService {
 	public JsonNode addorUpdateGoal(List<Goal> goals) {
 		ObjectNode response = mapper.createObjectNode();
 		try {
-			goalDao.addorUpdateGoal((goals));
+			goalDao.addorUpdateGoal((goals),null);
 			response.put("success", true);
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -20,7 +20,7 @@ public class SpeechService {
 	public JsonNode addOrupdateSpeech(List<Speech> speeches) {
 		ObjectNode response = mapper.createObjectNode();
 		try {
-			speechDao.addOrupdateSpeech(speeches);
+			speechDao.addOrupdateSpeech(speeches, null);
 			response.put("success", true);
 		} catch (Exception e) {
 			e.printStackTrace();

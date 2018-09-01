@@ -22,24 +22,21 @@ import com.anubhav.mgtc.entity.mapper.GoalMapper;
 @Service
 public class GoalDao {
 	@Autowired JdbiFactoryBean jdbiFactoryBean;
-	private GoalJdbiDao getGoalJdbiDao() throws NoSuchExtensionException, Exception {
+	private GoalJdbiDao getGoalJdbiDao() throws  Exception {
 		return	jdbiFactoryBean.getObject().onDemand(GoalJdbiDao.class);	
 	}
-	public void addorUpdateGoal(List<Goal> goals) throws NoSuchExtensionException, Exception {
-			try {
+	public void addorUpdateGoal(List<Goal> goals, Integer meetingId) throws  Exception {
+
 				List<Integer> meetingIds=  goals.stream().filter(goal->Objects.nonNull(goal.getMeetingId())).map(Goal::getMeetingId).collect(Collectors.toList());
+				if(!meetingIds.contains(meetingId)){
+					meetingIds.add(meetingId);
+				}
 				getGoalJdbiDao().deleteGoalsByMeetingId(meetingIds);
-			} catch (Exception e) {
-				throw new CompletionException(e);
-			}
-			try {
 				getGoalJdbiDao().addGoals(goals);
-			} catch (Exception e) {
-				throw new CompletionException(e);
-			}
+
 	}
 	
-	public List<Goal> getGoalByMeetingId(int id) throws NoSuchExtensionException, Exception{
+	public List<Goal> getGoalByMeetingId(int id) throws  Exception{
 		return getGoalJdbiDao().getGoalByMeetingId(id);
 	}
 	

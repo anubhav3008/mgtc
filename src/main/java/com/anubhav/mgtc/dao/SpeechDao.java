@@ -29,22 +29,16 @@ public class SpeechDao {
 		return	jdbiFactoryBean.getObject().onDemand(SpeechJdbiDao.class);	
 	}
 	
-	public void addOrupdateSpeech(List<Speech> speeches) throws NoSuchExtensionException, Exception {
-
-			try {
+	public void addOrupdateSpeech(List<Speech> speeches, Integer meetingId) throws  Exception {
 				List<Integer> meetingIds=  speeches.stream().filter(speech->Objects.nonNull(speech.getMeetingId())).map(Speech::getMeetingId).collect(Collectors.toList());
+				if(!meetingIds.contains(meetingId)){
+					meetingIds.add(meetingId);
+				}
 				getSpeechJdbiDao().deleteSpeechesByMeetingId(meetingIds);
-			}catch (Exception e) {
-				throw new CompletionException(e);
-			}
-			try {
 				getSpeechJdbiDao().addSpeeches(speeches);
-			} catch (Exception e) {
-				throw new CompletionException(e);
-			}
 	}
 	
-	public List<Speech> getSpeechByMeetingId(int MeetingId) throws NoSuchExtensionException, Exception{
+	public List<Speech> getSpeechByMeetingId(int MeetingId) throws Exception{
 		return getSpeechJdbiDao().getSpeechByMeetingId(MeetingId);
 	}
 

@@ -1,5 +1,6 @@
 package com.anubhav.mgtc.dao;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -94,23 +95,28 @@ public class  MeetingJsonDao {
 
 	private void addOrupdateSpeeches(JsonNode meetingJson) throws NoSuchExtensionException, Exception {
 		JsonNode speech = meetingJson.get("speech");
+		List<Speech> speechDOs = new ArrayList<>();
 		if(Objects.nonNull(speech)) {
-			List<Speech> speechDOs= Arrays.asList(mapper.treeToValue(speech, Speech[].class));
+			speechDOs= Arrays.asList(mapper.treeToValue(speech, Speech[].class));
 			if(Objects.nonNull(speechDOs)) {
 				speechDOs.stream().forEach(speech1 -> speech1.setMeetingId(meetingJson.get("meeting").get("id").asInt()));
-				speechDao.addOrupdateSpeech(speechDOs);
+
 			}
 		}
+		speechDao.addOrupdateSpeech(speechDOs, meetingJson.get("meeting").get("id").asInt());
 
 	}
 
 	private void addOrupdateGoals(JsonNode meetingJson) throws NoSuchExtensionException, Exception {
 		JsonNode goal = meetingJson.get("goal");
+		List<Goal> goalDOs =  new ArrayList<>();
 		if(Objects.nonNull(goal)) {
-			List<Goal> goalDOs= Arrays.asList( mapper.treeToValue(goal, Goal[].class));
-			goalDOs.stream().forEach(goal1 -> goal1.setMeetingId(meetingJson.get("meeting").get("id").asInt()));
-			goalDao.addorUpdateGoal(goalDOs);
+			goalDOs= Arrays.asList( mapper.treeToValue(goal, Goal[].class));
+			if(Objects.nonNull(goalDOs))
+				goalDOs.stream().forEach(goal1 -> goal1.setMeetingId(meetingJson.get("meeting").get("id").asInt()));
+
 		}
+		goalDao.addorUpdateGoal(goalDOs,meetingJson.get("meeting").get("id").asInt());
 
 
 	}
