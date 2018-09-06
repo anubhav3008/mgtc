@@ -45,10 +45,10 @@ public class MeetingDao {
 		@RegisterRowMapper(MeetingMapper.class)
 		public Meeting getMeeting(@Bind("id") int id);
 
-		@SqlUpdate("insert into meetings (id,timing,ttm_name,ttm_id,grammarian_name,grammarian_id,ah_counter_name,ah_counter_id,tmod_name,tmod_id,timer_name,timer_id,ge_name,ge_id,theme,venue)" + 
+		@SqlUpdate("insert into meetings (id,time,ttm_name,ttm_id,grammarian_name,grammarian_id,ah_counter_name,ah_counter_id,tmod_name,tmod_id,timer_name,timer_id,ge_name,ge_id,theme,venue,date)" +
 				"values ("
 				+ ":getId,"
-				+ ":getTiming,"
+				+ ":getTime,"
 				+ ":getTtmName,"
 				+ ":getTtmId,"
 				+ ":getGrammarianName,"
@@ -62,7 +62,8 @@ public class MeetingDao {
 				+ ":getGeName,"
 				+ ":getGeId,"
 				+ ":getTheme,"
-				+ ":getVenue)" + 
+				+ ":getVenue,"
+				+ ":getDate)" +
 				"on CONFLICT(id) do update set "
 				+ "ttm_name=EXCLUDED.ttm_name, "
 				+ "ttm_id=EXCLUDED.ttm_id,"
@@ -78,7 +79,8 @@ public class MeetingDao {
 				+ "ge_id=EXCLUDED.ge_id,"
 				+ "theme=EXCLUDED.theme,"
 				+ "venue=EXCLUDED.venue, "
-				+ "timing=EXCLUDED.timing;")
+				+ "date=EXCLUDED.date, "
+				+ "time=EXCLUDED.time;")
 		public int addOrUpdateMeeting(@BindMethods Meeting meeting);
 	}
 

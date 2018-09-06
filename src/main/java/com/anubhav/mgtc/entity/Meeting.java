@@ -3,9 +3,46 @@ package com.anubhav.mgtc.entity;
 import java.sql.Date;
 
 public class Meeting {
-	
+	public String getTime() {
+		return time;
+	}
+
+	public Meeting(Integer id, String time, Date date, String ttmName, String ttmId, String grammarianName, String grammarianId, String ahCounterName, String ahCounterId, String tmodName, String tmodId, String timerName, String timerId, String geName, String geId, String theme, String venue) {
+		this.id = id;
+		this.time = time;
+		this.date = date;
+		this.ttmName = ttmName;
+		this.ttmId = ttmId;
+		this.grammarianName = grammarianName;
+		this.grammarianId = grammarianId;
+		this.ahCounterName = ahCounterName;
+		this.ahCounterId = ahCounterId;
+		this.tmodName = tmodName;
+		this.tmodId = tmodId;
+		this.timerName = timerName;
+		this.timerId = timerId;
+		this.geName = geName;
+		this.geId = geId;
+		this.theme = theme;
+		this.venue = venue;
+	}
+
+	public void setTime(String time) {
+		this.time = time;
+
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
 	private Integer id;
-	private Date timing;
+	private String time;
+	private Date date;
 	private String ttmName;
 	private String ttmId;
 	private String grammarianName;
@@ -28,12 +65,7 @@ public class Meeting {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public Date getTiming() {
-		return timing;
-	}
-	public void setTiming(Date timing) {
-		this.timing = timing;
-	}
+
 	public String getTtmName() {
 		return ttmName;
 	}
@@ -118,26 +150,7 @@ public class Meeting {
 	public void setVenue(String venue) {
 		this.venue = venue;
 	}
-	public Meeting(int id, Date timing, String ttmName, String ttmId, String grammarianName, String grammarianId,
-			String ahCounterName, String ahCounterId, String tmodName, String tmodId, String timerName, String timerId,
-			String geName, String geId, String theme, String venue) {
-		this.id = id;
-		this.timing = timing;
-		this.ttmName = ttmName;
-		this.ttmId = ttmId;
-		this.grammarianName = grammarianName;
-		this.grammarianId = grammarianId;
-		this.ahCounterName = ahCounterName;
-		this.ahCounterId = ahCounterId;
-		this.tmodName = tmodName;
-		this.tmodId = tmodId;
-		this.timerName = timerName;
-		this.timerId = timerId;
-		this.geName = geName;
-		this.geId = geId;
-		this.theme = theme;
-		this.venue = venue;
-	}
+
 	public Meeting() {}
 	 
 }
