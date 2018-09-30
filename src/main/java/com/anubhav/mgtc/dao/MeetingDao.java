@@ -34,12 +34,28 @@ public class MeetingDao {
 		MeetingJdbiDao meetingJdbiDao =  getMeetingJdbiDao();
 		return meetingJdbiDao.getMeeting(id);
 	}
+	public List<Meeting> getMeetings(String name) throws Exception {
+		MeetingJdbiDao meetingJdbiDao =  getMeetingJdbiDao();
+		return meetingJdbiDao.getMeetings(name);
+	}
 	
 	interface MeetingJdbiDao{
 
 		@SqlQuery("select * from meetings")
 		@RegisterRowMapper(MeetingMapper.class)
 		public List<Meeting> getAllMeetings();
+
+
+		@SqlQuery("select * from meetings where" +
+				" grammarian_name= :name or" +
+				" ah_counter_name = :name or" +
+				" ge_name= :name or" +
+				" tmod_name= :name or" +
+				" timer_name= :name or" +
+				" ttm_name = :name")
+		@RegisterRowMapper(MeetingMapper.class)
+		public List<Meeting> getMeetings(@Bind("name")  String name);
+
 
 		@SqlQuery("select * from meetings where id= :id")
 		@RegisterRowMapper(MeetingMapper.class)

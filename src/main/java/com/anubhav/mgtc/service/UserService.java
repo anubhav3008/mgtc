@@ -1,5 +1,8 @@
 package com.anubhav.mgtc.service;
 
+import com.anubhav.mgtc.aggregator.ContributionAggregator;
+import com.anubhav.mgtc.dao.MeetingDao;
+import com.anubhav.mgtc.dao.SpeechDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +15,13 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 public class UserService {
 
 	@Autowired UsersDao usersDao;
+	@Autowired
+	MeetingDao meetingDao;
+	@Autowired
+	SpeechDao speechDao;
+
+	@Autowired
+	ContributionAggregator contributionAggregator;
 	ObjectMapper mapper = new ObjectMapper();
 	public JsonNode getAllUsers() {
 		ObjectNode response = mapper.createObjectNode();
@@ -37,6 +47,20 @@ public class UserService {
 		}
 		return response;
 	}
+
+	public JsonNode getUserContribution(String name){
+		ObjectNode response = mapper.createObjectNode();
+		try {
+			response.putPOJO("data", contributionAggregator.getContribution(meetingDao.getMeetings(name), speechDao.getSpeechByName(name), name));
+			response.put("success", true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.put("success", false);
+			response.put("error", e.getMessage());
+		}
+		return response;
+	}
+
 
 
 
