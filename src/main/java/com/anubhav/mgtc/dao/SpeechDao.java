@@ -44,6 +44,10 @@ public class SpeechDao {
 	public List<Speech> getSpeechByName(String name) throws Exception {
 		return getSpeechJdbiDao().getSpeechByUserName(name);
 	}
+	public List<Speech> getAllSpeeches() throws Exception {
+		return getSpeechJdbiDao().getAllSpeech();
+	}
+
 
 	@UseStringTemplate3StatementLocator
 	interface SpeechJdbiDao{
@@ -54,6 +58,12 @@ public class SpeechDao {
 		@SqlQuery("select  * from speeches where evaluator_name= :name or speaker_name = :name ")
 		@RegisterRowMapper(SpeechMapper.class)
 		public List<Speech> getSpeechByUserName(@Bind("name") String name);
+
+
+		@SqlQuery("select  * from speeches")
+		@RegisterRowMapper(SpeechMapper.class)
+		public List<Speech> getAllSpeech();
+
 
 
 		@SqlBatch("insert into speeches (id, meeting_id, project_name, speaker_name, speaker_id, evaluator_name, evaluator_id, time_min, time_max, date) " +

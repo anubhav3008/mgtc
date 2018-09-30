@@ -65,7 +65,6 @@ public class ContributionAggregator {
                 Contribution contribution = new Contribution(meeting.getDate(), "TTM", "");
                 contributions.add(contribution);
             }
-
         }
         return contributions;
     }
