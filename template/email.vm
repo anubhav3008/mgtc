@@ -1,0 +1,231 @@
+<html>
+
+<head>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+    </style>
+</head>
+<body>
+
+<div>
+    <div align="center">
+        <h3><b> $data.meeting.clubName.asText() </b></h3>
+        <h5>
+            Meeting: $data.meeting.id<br>
+            Date  :  $data.meeting.date.asText() <br>
+            Time  :  $data.meeting.time.asText()<br>
+            Venue :  $data.meeting.venue.asText()<br>
+        </h5> <h3>
+        Meeting Theme :<b> $data.meeting.theme.asText()</b>
+    </h3>
+
+    </div>
+
+
+
+    #set( $introEnd = $timeUtil.getTime( $data.meeting.time.asText() , "13" ))
+
+    <h4><b>Introduction Section ($data.meeting.time.asText() - $introEnd) </b><br> </h4>
+
+    <table style="width:100%">
+        <thead>
+        <tr>
+            <th class="col-xs-1">Time in minute</th>
+            <th class="col-xs-2">Role player</th>
+            <th class="col-xs-6">event</th>
+            <th class="col-xs-3">Name of role player</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>1</td>
+            <td>SAA</td>
+            <td>Reading of Toastmaster's mission, general meeting guidance and handover to Presiding officer</td>
+            <td>$data.meeting.saaName.asText()</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Presiding Officer</td>
+            <td>Welcome the audience, call guests to introduce and introduction of TMOD</td>
+            <td>$data.meeting.presidentName.asText()</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>TMOD</td>
+            <td>Brief on meeting structure, describe ballot and introduce word of the day and Introduce GE</td>
+            <td>$data.meeting.tmodName.asText()</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>GE</td>
+            <td>Role description by GE, supplementary role players introduction and role description by each role player (Timer, Grammarian, Ah counter) and handing over the stage back to TMOD</td>
+            <td>$data.meeting.geName.asText()</td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td>TMOD</td>
+            <td>Theme Presentation - Part 1</td>
+            <td>$data.meeting.tmodName.asText()</td>
+        </tr>
+        </tbody>
+    </table>
+
+
+
+    #set( $preparedEnd = $introEnd)
+    #foreach ($sp in $data.speech)
+        #set( $preparedEnd=  $timeUtil.getTime( $preparedEnd , $sp.timeMax.asText(),'1' ))
+    #end
+    #set( $preparedEnd=  $timeUtil.getTime( $preparedEnd , $sp.timeMax.asText(),'6' ))
+    <h4><b>Prepared Speeches Section ($introEnd - $preparedEnd )</b></h4>
+
+    <table style="width:100%">
+        <thead>
+        <tr>
+            <th class="col-xs-1">Min time in minute</th>
+            <th class="col-xs-1">max time in minute</th>
+            <th class="col-xs-3">Speaker</th>
+            <th class="col-xs-3">Evaluator</th>
+            <th class="col-xs-4">Project Name</th>
+        </tr>
+        </thead>
+        <tbody>
+            #foreach ($sp in $data.speech)
+            <tr>
+                <td>$sp.timeMin.asText()</td>
+                <td>$sp.timeMax.asText()</td>
+                <td>$sp.speakerName.asText()</td>
+                <td>$sp.evaluatorName.asText()</td>
+                <td>$sp.projectName.asText()</td>
+            </tr>
+            #end
+        </tbody>
+    </table>
+    <table style="width:100%">
+        <thead>
+        <tr>
+            <th class="col-xs-1">Time in minute</th>
+            <th class="col-xs-2">Role player</th>
+            <th class="col-xs-6">event</th>
+            <th class="col-xs-3">Name of role player</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>1</td>
+            <td>SAA</td>
+            <td>Voting for best speaker</td>
+            <td>$data.meeting.saaName.asText()</td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td>TMOD</td>
+            <td>Theme presentation Part 2</td>
+            <td>$data.meeting.tmodName.asText()</td>
+        </tr>
+        </tbody>
+    </table>
+    #set( $tableTopicEnd = $timeUtil.getTime( $preparedEnd , '21' ))
+
+    <h4><b>Table topics Section ( $preparedEnd  - $tableTopicEnd)</b></h4>
+    <table style="width:100%">
+        <thead>
+        <tr>
+            <th class="col-xs-1">Time in minute</th>
+            <th class="col-xs-2">Role player</th>
+            <th class="col-xs-6">event</th>
+            <th class="col-xs-3">Name of role player</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>15</td>
+            <td>TTM</td>
+            <td>Table topics section</td>
+            <td>$data.meeting.ttmName.asText()</td>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>SAA</td>
+            <td>Voting for best table topic speaker</td>
+            <td>$data.meeting.saaName.asText()</td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td>TMOD</td>
+            <td>Theme presentation Part 3</td>
+            <td>$data.meeting.tmodName.asText()</td>
+        </tr>
+        </tbody>
+    </table>
+
+    #set( $evaluationEnd = $tableTopicEnd )
+    #foreach ($sp in $data.speech)
+        #set( $evaluationEnd=  $timeUtil.getTime( $evaluationEnd , '4' ))
+    #end
+    #set( $evaluationEnd =  $timeUtil.getTime( $evaluationEnd , '22' ))
+
+    <h4><b>Evaluations Section ( $tableTopicEnd - $evaluationEnd )</b></h4>
+    <table style="width:100%">
+        <thead>
+        <tr>
+            <th class="col-xs-1">Time in minute</th>
+            <th class="col-xs-7">event</th>
+            <th class="col-xs-4">Name of role player</th>
+        </tr>
+        </thead>
+        <tbody>
+            #foreach ($sp in $data.speech)
+            <tr>
+                <td>4</td>
+                <td>Evaluation of $sp.speakerName.asText() for $sp.projectName.asText()</td>
+                <td>$sp.evaluatorName.asText()</td>
+            </tr>
+            #end
+        <tr>
+            <td>4</td>
+            <td>Timer report presentation</td>
+            <td>$data.meeting.timerName.asText()</td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td>Ah counter report presentation</td>
+            <td>$data.meeting.ahCounterName.asText()</td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td>Grammarian report presentation</td>
+            <td>$data.meeting.grammarianName.asText()</td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td>GE report for overall meeting</td>
+            <td>$data.meeting.geName.asText()</td>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>Voting for best evaluator, best role player and best supp role player by SAA</td>
+            <td>$data.meeting.saaName.asText()</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>Winners announcement and closing remarks by Presiding Officer</td>
+            <td>$data.meeting.presidentName.asText()</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Request for next meeting roles</td>
+            <td>$data.meeting.vpeName.asText()</td>
+        </tr>
+
+
+        </tbody>
+    </table>
+
+
+</div>
+</body>
+</html>

@@ -7,7 +7,8 @@ public class Meeting {
 		return time;
 	}
 
-	public Meeting(Integer id, String time, Date date, String ttmName, String ttmId, String grammarianName, String grammarianId, String ahCounterName, String ahCounterId, String tmodName, String tmodId, String timerName, String timerId, String geName, String geId, String theme, String venue) {
+
+	public Meeting(Integer id, String time, Date date, String ttmName, String ttmId, String grammarianName, String grammarianId, String ahCounterName, String ahCounterId, String tmodName, String tmodId, String timerName, String timerId, String geName, String geId, String theme, String venue, String clubName, String saaId, String saaName, String clubId, String presidentId, String presidentName, String vpeId, String vpeName) {
 		this.id = id;
 		this.time = time;
 		this.date = date;
@@ -25,6 +26,14 @@ public class Meeting {
 		this.geId = geId;
 		this.theme = theme;
 		this.venue = venue;
+		this.clubName = clubName;
+		this.saaId = saaId;
+		this.saaName = saaName;
+		this.clubId = clubId;
+		this.presidentId = presidentId;
+		this.presidentName = presidentName;
+		this.vpeId = vpeId;
+		this.vpeName = vpeName;
 	}
 
 	public void setTime(String time) {
@@ -57,8 +66,79 @@ public class Meeting {
 	private String geId;
 	private String theme;
 	private String venue;
-	
-	
+	private String clubName;
+	private String saaId;
+	private String saaName;
+	private String clubId;
+	private String presidentId;
+	private String presidentName;
+	private String vpeId;
+	private String vpeName;
+
+	public String getClubName() {
+		return clubName;
+	}
+
+	public void setClubName(String clubName) {
+		this.clubName = clubName;
+	}
+
+	public String getSaaId() {
+		return saaId;
+	}
+
+	public void setSaaId(String saaId) {
+		this.saaId = saaId;
+	}
+
+	public String getSaaName() {
+		return saaName;
+	}
+
+	public void setSaaName(String saaName) {
+		this.saaName = saaName;
+	}
+
+	public String getClubId() {
+		return clubId;
+	}
+
+	public void setClubId(String clubId) {
+		this.clubId = clubId;
+	}
+
+	public String getPresidentId() {
+		return presidentId;
+	}
+
+	public void setPresidentId(String presidentId) {
+		this.presidentId = presidentId;
+	}
+
+	public String getPresidentName() {
+		return presidentName;
+	}
+
+	public void setPresidentName(String presidentName) {
+		this.presidentName = presidentName;
+	}
+
+	public String getVpeId() {
+		return vpeId;
+	}
+
+	public void setVpeId(String vpeId) {
+		this.vpeId = vpeId;
+	}
+
+	public String getVpeName() {
+		return vpeName;
+	}
+
+	public void setVpeName(String vpeName) {
+		this.vpeName = vpeName;
+	}
+
 	public Integer getId() {
 		return id;
 	}

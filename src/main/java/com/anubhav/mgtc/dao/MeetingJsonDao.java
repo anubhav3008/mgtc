@@ -26,7 +26,7 @@ public class  MeetingJsonDao {
 	ObjectMapper mapper = new ObjectMapper();
 
 
-	public JsonNode getMeetingJson(int meetingId) throws NoSuchExtensionException, Exception {
+	public JsonNode getMeetingJson(int meetingId) throws  Exception {
 		ObjectMapper mapper = new ObjectMapper();
 		ObjectNode meetingJson=mapper.createObjectNode();
 		CompletableFuture<Void> meetingFuture=  CompletableFuture.runAsync(()->  {

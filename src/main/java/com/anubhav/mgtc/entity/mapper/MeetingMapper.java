@@ -28,7 +28,16 @@ public class MeetingMapper  implements RowMapper<Meeting>{
 				rs.getString("ge_name"), 
 				rs.getString("ge_id"), 
 				rs.getString("theme"), 
-				rs.getString("venue"));
+				rs.getString("venue"),
+				rs.getString("clubname"),
+				rs.getString("saa_id"),
+				rs.getString("saa_name"),
+				rs.getString("club_id"),
+				rs.getString("president_id"),
+				rs.getString("president_name"),
+				rs.getString("vpe_id"),
+				rs.getString("vpe_name")
+				);
 	}
 
 }

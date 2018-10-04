@@ -1,6 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.amazonaws.beanstalk</groupId>
 	<artifactId>mgtc</artifactId>
@@ -34,6 +34,47 @@
 		<dependency>
 			<groupId>com.amazonaws</groupId>
 			<artifactId>aws-java-sdk-dynamodb</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.velocity</groupId>
+			<artifactId>velocity</artifactId>
+			<version>1.7</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.velocity</groupId>
+			<artifactId>velocity-tools</artifactId>
+			<version>2.0</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.sendgrid/sendgrid-java -->
+		<dependency>
+			<groupId>com.sendgrid</groupId>
+			<artifactId>sendgrid-java</artifactId>
+			<version>4.2.1</version>
+		</dependency>
+
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>itextpdf</artifactId>
+            <version>5.5.6</version>
+        </dependency>
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-jdk15on</artifactId>
+            <version>1.52</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.itextpdf.tool</groupId>
+            <artifactId>xmlworker</artifactId>
+            <version>5.5.7</version>
+        </dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.xhtmlrenderer/core-renderer -->
+		<dependency>
+			<groupId>org.xhtmlrenderer</groupId>
+			<artifactId>core-renderer</artifactId>
+			<version>R8pre2</version>
 		</dependency>
 
 
@@ -80,57 +121,57 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>${mysql.connector.version}</version>
 		</dependency>
-		
+
 		<dependency>
-      <groupId>org.jdbi</groupId>
-      <artifactId>jdbi3-bom</artifactId>
-      <type>pom</type>
-      <version>3.3.0</version>
-      <scope>import</scope>
-    </dependency>
+			<groupId>org.jdbi</groupId>
+			<artifactId>jdbi3-bom</artifactId>
+			<type>pom</type>
+			<version>3.3.0</version>
+			<scope>import</scope>
+		</dependency>
 		<dependency>
-    <groupId>org.jdbi</groupId>
-    <artifactId>jdbi3-core</artifactId>
-  	<version>3.3.0</version>
-  </dependency>
-		
-		<!-- https://mvnrepository.com/artifact/org.jdbi/jdbi3-sqlobject -->
-<dependency>
-    <groupId>org.jdbi</groupId>
-    <artifactId>jdbi3-sqlobject</artifactId>
-    <version>3.3.0</version>
-</dependency>
-		<!-- https://mvnrepository.com/artifact/org.jdbi/jdbi -->
-<dependency>
-    <groupId>org.jdbi</groupId>
-    <artifactId>jdbi</artifactId>
-    <version>2.78</version>
-</dependency>
-		
-	<dependency>
-		<groupId>org.jdbi</groupId>
-		<artifactId>jdbi3-spring4</artifactId>
+			<groupId>org.jdbi</groupId>
+			<artifactId>jdbi3-core</artifactId>
 			<version>3.3.0</version>
 		</dependency>
-<dependency>
-    <groupId>org.jdbi</groupId>
-    <artifactId>jdbi3-postgres</artifactId>
-    <version>3.3.0</version>
-</dependency>
 
-<!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
-<dependency>
-    <groupId>org.postgresql</groupId>
-    <artifactId>postgresql</artifactId>
-    <version>42.2.4</version>
-</dependency>
+		<!-- https://mvnrepository.com/artifact/org.jdbi/jdbi3-sqlobject -->
+		<dependency>
+			<groupId>org.jdbi</groupId>
+			<artifactId>jdbi3-sqlobject</artifactId>
+			<version>3.3.0</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.jdbi/jdbi -->
+		<dependency>
+			<groupId>org.jdbi</groupId>
+			<artifactId>jdbi</artifactId>
+			<version>2.78</version>
+		</dependency>
 
-        
-          <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-jdbc</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
+		<dependency>
+			<groupId>org.jdbi</groupId>
+			<artifactId>jdbi3-spring4</artifactId>
+			<version>3.3.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jdbi</groupId>
+			<artifactId>jdbi3-postgres</artifactId>
+			<version>3.3.0</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>42.2.4</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
 
 	</dependencies>
 	<build>
