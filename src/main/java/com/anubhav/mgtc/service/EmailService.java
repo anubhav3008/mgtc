@@ -3,6 +3,7 @@ package com.anubhav.mgtc.service;
 import com.anubhav.mgtc.dao.MeetingJsonDao;
 import com.anubhav.mgtc.dao.UsersDao;
 import com.anubhav.mgtc.utils.EmailUtil;
+import com.anubhav.mgtc.utils.ImageHelper;
 import com.anubhav.mgtc.utils.VelocityUtil;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -10,7 +11,9 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,9 +38,11 @@ public class EmailService {
         ObjectNode response = mapper.createObjectNode();
         try {
             JsonNode meeting = meetingJsonDao.getMeetingJson(meetingId);
-            String html=velocityUtil.transform((ObjectNode) mapper.readTree(mapper.writeValueAsString(meeting)),"template/email.vm");
+            Map<String, String> images= new HashMap<>();
+            images.put("logo",ImageHelper.toastmastersLogoUrl);
+            String html=velocityUtil.transform((ObjectNode) mapper.readTree(mapper.writeValueAsString(meeting)),"template/agenda_pdf.vm",images);
             System.out.println("Going to send the mail as ="+html);
-            emailUtil.sendEmail("mailer@mgtc.com",emailIds,html,"Meeting Agenda");
+            emailUtil.sendEmail("mailer@mgtc.com",emailIds,html,"Meeting Agenda # "+meetingId);
 
             response.put("success", true);
         } catch (Exception e) {

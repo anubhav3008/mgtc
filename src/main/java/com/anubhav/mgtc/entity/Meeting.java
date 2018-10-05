@@ -1,5 +1,7 @@
 package com.anubhav.mgtc.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.sql.Date;
 
 public class Meeting {
@@ -51,6 +53,8 @@ public class Meeting {
 
 	private Integer id;
 	private String time;
+	@JsonFormat
+			(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
 	private Date date;
 	private String ttmName;
 	private String ttmId;

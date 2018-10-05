@@ -1,6 +1,8 @@
 package com.anubhav.mgtc.service;
 
 import com.anubhav.mgtc.dao.MeetingJsonDao;
+import com.anubhav.mgtc.utils.Base64ImageProvider;
+import com.anubhav.mgtc.utils.ImageHelper;
 import com.anubhav.mgtc.utils.VelocityUtil;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -8,20 +10,23 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.tool.xml.XMLWorker;
 import com.itextpdf.tool.xml.XMLWorkerHelper;
-import org.dom4j.DocumentException;
+import com.itextpdf.tool.xml.html.Tags;
+import com.itextpdf.tool.xml.parser.XMLParser;
+import com.itextpdf.tool.xml.pipeline.css.CSSResolver;
+import com.itextpdf.tool.xml.pipeline.css.CssResolverPipeline;
+import com.itextpdf.tool.xml.pipeline.end.PdfWriterPipeline;
+import com.itextpdf.tool.xml.pipeline.html.HtmlPipeline;
+import com.itextpdf.tool.xml.pipeline.html.HtmlPipelineContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.xhtmlrenderer.pdf.ITextRenderer;
 
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.RandomAccessFile;
-import java.nio.file.Files;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class AgendaService {
@@ -30,19 +35,41 @@ public class AgendaService {
     @Autowired
     VelocityUtil velocityUtil;
 
+    @Autowired
+    ImageHelper imageHelper;
     ObjectMapper mapper = new ObjectMapper();
 
     public byte[] getAgenda(int meetingId) throws Exception {
         JsonNode meeting = meetingJsonDao.getMeetingJson(meetingId);
-        String html=velocityUtil.transform((ObjectNode) mapper.readTree(mapper.writeValueAsString(meeting)),"classpath:template/agenda_pdf.vm");
+
+        Map<String, String> images= new HashMap<>();
+        images.put("logo",imageHelper.getBaseImageBase64(ImageHelper.toastmastersLogoUrl));
+        String str=velocityUtil.transform((ObjectNode) mapper.readTree(mapper.writeValueAsString(meeting)),"template/agenda_pdf.vm", images);
+        System.out.println("html="+str );
         Document document = new Document(PageSize.LEGAL, 10, 10,10, 10);
         PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("agenda.pdf"));
+
         document.open();
-        InputStream is = new ByteArrayInputStream( html.getBytes() );
-        XMLWorkerHelper.getInstance().parseXHtml(writer, document,
-                is);
+
+        CSSResolver cssResolver =
+                XMLWorkerHelper.getInstance().getDefaultCssResolver(true);
+
+        // HTML
+        HtmlPipelineContext htmlContext = new HtmlPipelineContext(null);
+        htmlContext.setTagFactory(Tags.getHtmlTagProcessorFactory());
+        htmlContext.setImageProvider(new Base64ImageProvider());
+
+        // Pipelines
+        PdfWriterPipeline pdf = new PdfWriterPipeline(document, writer);
+        HtmlPipeline html = new HtmlPipeline(htmlContext, pdf);
+        CssResolverPipeline css = new CssResolverPipeline(cssResolver, html);
+
+        // XML Worker
+        XMLWorker worker = new XMLWorker(css, true);
+        XMLParser p = new XMLParser(worker);
+        p.parse(new ByteArrayInputStream(str.getBytes()));
+
         document.close();
-        System.out.println( "PDF Created!" );
 
         RandomAccessFile f = new RandomAccessFile("agenda.pdf", "r");
         byte[] b = new byte[(int)f.length()];

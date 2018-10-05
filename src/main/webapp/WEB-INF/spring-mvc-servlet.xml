@@ -15,4 +15,6 @@ xsi:schemaLocation=" http://www.springframework.org/schema/beans  http://www.spr
     <mvc:cors>
 		<mvc:mapping path="/**" />
 	</mvc:cors>
+    <mvc:resources mapping="/resources/**" location="/WEB-INF/" />
+
 </beans>
