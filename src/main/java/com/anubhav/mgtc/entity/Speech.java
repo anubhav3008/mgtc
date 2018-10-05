@@ -1,6 +1,9 @@
 package com.anubhav.mgtc.entity;
 
-import java.sql.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.util.Date;
 
 public class Speech {
 	private Integer id;
@@ -10,6 +13,8 @@ public class Speech {
 	private String speakerId;
 	private String evaluatorName;
 	private String evaluatorId;
+	@JsonFormat
+			(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
 	private Date date;
 	private double timeMin;
 	private double timeMax;

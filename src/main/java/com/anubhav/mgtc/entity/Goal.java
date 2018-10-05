@@ -1,6 +1,8 @@
 package com.anubhav.mgtc.entity;
 
-import java.sql.Date;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.util.Date;
 
 public class Goal {
 
@@ -8,6 +10,8 @@ public class Goal {
 	private String userId;
 	private String userName;
 	private String projectName;
+	@JsonFormat
+			(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
 	private Date date;
 	private int meetingId;
 	public int getMeetingId() {

@@ -2,7 +2,8 @@ package com.anubhav.mgtc.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import java.sql.Date;
+import java.util.Date;
+
 
 public class Meeting {
 	public String getTime() {
