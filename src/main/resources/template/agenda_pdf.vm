@@ -40,10 +40,10 @@
             <table style="width:100%" class="borderStyle">
                 <thead>
                 <tr>
-                    <th>Time in minute</th>
-                    <th>Role player</th>
-                    <th>event</th>
-                    <th>Name of role player</th>
+                    <th class="borderStyle">Time in minute</th>
+                    <th class="borderStyle">Role player</th>
+                    <th class="borderStyle">event</th>
+                    <th class="borderStyle">Name of role player</th>
                 </tr>
                 </thead>
                 <tbody>
