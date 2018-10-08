@@ -41,7 +41,7 @@ public class MeetingDao {
 	
 	interface MeetingJdbiDao{
 
-		@SqlQuery("select * from meetings")
+		@SqlQuery("select * from meetings order by id desc")
 		@RegisterRowMapper(MeetingMapper.class)
 		public List<Meeting> getAllMeetings();
 
