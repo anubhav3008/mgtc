@@ -45,7 +45,7 @@ public class ContributionAggregator {
                 Contribution contribution = new Contribution(meeting.getDate(), "TMOD", meeting.getTheme());
                 contributions.add(contribution);
             }
-            if (name.equals(meeting.getAhCounterId())) {
+            if (name.equals(meeting.getAhCounterName())) {
                 Contribution contribution = new Contribution(meeting.getDate(), "Ah-Counter", "");
                 contributions.add(contribution);
             }
