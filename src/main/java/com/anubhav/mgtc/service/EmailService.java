@@ -42,7 +42,7 @@ public class EmailService {
             images.put("logo",ImageHelper.toastmastersLogoUrl);
             String html=velocityUtil.transform((ObjectNode) mapper.readTree(mapper.writeValueAsString(meeting)),"template/agenda_pdf.vm",images);
             System.out.println("Going to send the mail as ="+html);
-            emailUtil.sendEmail("mailer@mgtc.com",emailIds,html,"Meeting Agenda # "+meetingId);
+            emailUtil.sendEmail("mailer@srtmc.com",emailIds,html,"Meeting Agenda # "+meetingId);
 
             response.put("success", true);
         } catch (Exception e) {

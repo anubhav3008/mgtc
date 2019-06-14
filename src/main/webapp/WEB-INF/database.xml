@@ -9,10 +9,10 @@
 
   
   <bean id="db" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-    <property name="url" value="jdbc:postgresql://ec2-23-21-216-174.compute-1.amazonaws.com:5432/dft9hg4ji5sjj2?ssl=true&amp;sslfactory=org.postgresql.ssl.NonValidatingFactory"/>
+    <property name="url" value="jdbc:postgresql://ec2-23-21-129-125.compute-1.amazonaws.com:5432/deh0n3uoaa9mun?ssl=true&amp;sslfactory=org.postgresql.ssl.NonValidatingFactory"/>
   	<property name="driverClassName" value= "org.postgresql.Driver"></property>
-  	<property name="username" value="yvhltcgpdjrjbs"></property>
-  	<property name="password" value="668516ee362cb91dd9d21ee5e90ce8f1dc9e8ea3bdf5a1b98855a81c81f40c03"></property>
+  	<property name="username" value="paoaszezelehkl"></property>
+  	<property name="password" value="e8d54047d98e19d4d9873d15ce85d42b1c57c58c60588b8f130e4e01d73865f5"></property>
   	
   </bean>
 
