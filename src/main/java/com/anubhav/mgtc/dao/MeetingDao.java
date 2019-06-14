@@ -61,7 +61,7 @@ public class MeetingDao {
 		@RegisterRowMapper(MeetingMapper.class)
 		public Meeting getMeeting(@Bind("id") int id);
 
-		@SqlUpdate("insert into meetings (id,time,ttm_name,ttm_id,grammarian_name,grammarian_id,ah_counter_name,ah_counter_id,tmod_name,tmod_id,timer_name,timer_id,ge_name,ge_id,theme,venue,date)" +
+		@SqlUpdate("insert into meetings (id,time,ttm_name,ttm_id,grammarian_name,grammarian_id,ah_counter_name,ah_counter_id,tmod_name,tmod_id,timer_name,timer_id,ge_name,ge_id,theme,venue,date,saa_name,president_name,clubname,vpe_name)" +
 				"values ("
 				+ ":getId,"
 				+ ":getTime,"
@@ -79,8 +79,12 @@ public class MeetingDao {
 				+ ":getGeId,"
 				+ ":getTheme,"
 				+ ":getVenue,"
-				+ ":getDate)" +
-				"on CONFLICT(id) do update set "
+				+ ":getDate,"
+				+ ":getSaaName,"
+				+ ":getPresidentName,"
+				+ ":getClubName,"
+				+ ":getVpeName)"
+				+"on CONFLICT(id) do update set "
 				+ "ttm_name=EXCLUDED.ttm_name, "
 				+ "ttm_id=EXCLUDED.ttm_id,"
 				+ "grammarian_name=EXCLUDED.grammarian_name,"
@@ -96,8 +100,13 @@ public class MeetingDao {
 				+ "theme=EXCLUDED.theme,"
 				+ "venue=EXCLUDED.venue, "
 				+ "date=EXCLUDED.date, "
-				+ "time=EXCLUDED.time;")
-		public int addOrUpdateMeeting(@BindMethods Meeting meeting);
+				+ "time=EXCLUDED.time,"
+				+ "saa_name=EXCLUDED.saa_name,"
+				+ "president_name=EXCLUDED.president_name,"
+				+ "clubname=EXCLUDED.clubname,"
+				+ "vpe_name=EXCLUDED.vpe_name;")
+
+				public int addOrUpdateMeeting(@BindMethods Meeting meeting);
 	}
 
 
