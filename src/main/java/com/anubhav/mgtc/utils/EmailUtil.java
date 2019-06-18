@@ -19,7 +19,7 @@ public class EmailUtil {
     public void sendEmail(String fromMail, List<String> toMails, String html, String subjectText) throws IOException {
 
         System.out.println("going to send mail to ="+toMails);
-        Email from = new Email(fromMail,"MGTC");
+        Email from = new Email(fromMail,"SRTMC");
         String subject = subjectText;
         Content content = new Content("text/html", html);
         Mail mail =  new Mail();
