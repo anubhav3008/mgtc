@@ -14,7 +14,7 @@ public class SpeechMapper implements RowMapper<Speech> {
 	@Override
 	public Speech map(ResultSet rs, StatementContext ctx) throws SQLException {
 		return new Speech(rs.getInt("id"), 
-				rs.getInt("meeting_id"), 
+				rs.getString("meeting_id"),
 				rs.getString("project_name"), 
 				rs.getString("speaker_name"), 
 				rs.getString("speaker_id"),

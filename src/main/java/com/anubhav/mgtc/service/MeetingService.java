@@ -29,7 +29,7 @@ public class MeetingService {
 		return response;
 	}
 	
-	public JsonNode getMeeting(int id) {
+	public JsonNode getMeeting(String id) {
 		ObjectNode response = mapper.createObjectNode();
 		try {
 			response.set("data",  meetingJsonDao.getMeetingJson(id));

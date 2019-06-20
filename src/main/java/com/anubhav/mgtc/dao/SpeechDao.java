@@ -29,8 +29,8 @@ public class SpeechDao {
 		return	jdbiFactoryBean.getObject().onDemand(SpeechJdbiDao.class);	
 	}
 	
-	public void addOrupdateSpeech(List<Speech> speeches, Integer meetingId) throws  Exception {
-				List<Integer> meetingIds=  speeches.stream().filter(speech->Objects.nonNull(speech.getMeetingId())).map(Speech::getMeetingId).collect(Collectors.toList());
+	public void addOrupdateSpeech(List<Speech> speeches, String meetingId) throws  Exception {
+				List<String> meetingIds=  speeches.stream().filter(speech->Objects.nonNull(speech.getMeetingId())).map(Speech::getMeetingId).collect(Collectors.toList());
 				if(!meetingIds.contains(meetingId)){
 					meetingIds.add(meetingId);
 				}
@@ -38,7 +38,7 @@ public class SpeechDao {
 				getSpeechJdbiDao().addSpeeches(speeches);
 	}
 	
-	public List<Speech> getSpeechByMeetingId(int MeetingId) throws Exception{
+	public List<Speech> getSpeechByMeetingId(String MeetingId) throws Exception{
 		return getSpeechJdbiDao().getSpeechByMeetingId(MeetingId);
 	}
 	public List<Speech> getSpeechByName(String name) throws Exception {
@@ -53,7 +53,7 @@ public class SpeechDao {
 	interface SpeechJdbiDao{
 		@SqlQuery("select * from speeches where meeting_id = :id")
 		@RegisterRowMapper(SpeechMapper.class)
-		public List<Speech> getSpeechByMeetingId( @Bind("id")  int  id);
+		public List<Speech> getSpeechByMeetingId( @Bind("id")  String  id);
 
 		@SqlQuery("select  * from speeches where evaluator_name= :name or speaker_name = :name ")
 		@RegisterRowMapper(SpeechMapper.class)
@@ -107,7 +107,7 @@ public class SpeechDao {
 		public int[] addSpeeches(@BindMethods List<Speech> speeches);
 
 		@SqlBatch("delete from speeches where meeting_id = :ids")
-		public int[] deleteSpeechesByMeetingId(@Bind("ids") List<Integer> id);
+		public int[] deleteSpeechesByMeetingId(@Bind("ids") List<String> id);
 		
 		
 		

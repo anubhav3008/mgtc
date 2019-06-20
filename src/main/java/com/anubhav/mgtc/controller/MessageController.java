@@ -28,14 +28,14 @@ public class MessageController {
     AgendaService agendaService;
     public @ResponseBody
     @RequestMapping("/email")
-    JsonNode sendEmail(@RequestParam("meetingId") int meetingId,
+    JsonNode sendEmail(@RequestParam("meetingId") String meetingId,
                        @RequestParam(name = "emailId", required = false) List<String> emailIds) throws Exception {
         return emailService.sendEmail(meetingId, emailIds);
 
     }
 
     @RequestMapping(value="/agenda/{id}", method=RequestMethod.GET)
-    public ResponseEntity<byte[]> getAgenda(@PathVariable("id") int meetingId) throws Exception {
+    public ResponseEntity<byte[]> getAgenda(@PathVariable("id") String meetingId) throws Exception {
         byte[] contents=agendaService.getAgenda(meetingId);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType("application/pdf"));

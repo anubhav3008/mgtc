@@ -16,7 +16,7 @@ public class GoalService {
 	@Autowired GoalDao goalDao;
 	ObjectMapper mapper = new ObjectMapper();
 
-	public JsonNode getGoalByMeetingId(int id) {
+	public JsonNode getGoalByMeetingId(String id) {
 		ObjectNode response = mapper.createObjectNode();
 		try {
 			response.putPOJO("data", goalDao.getGoalByMeetingId(id));

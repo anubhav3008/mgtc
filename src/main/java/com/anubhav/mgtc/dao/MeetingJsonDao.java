@@ -26,7 +26,7 @@ public class  MeetingJsonDao {
 	ObjectMapper mapper = new ObjectMapper();
 
 
-	public JsonNode getMeetingJson(int meetingId) throws  Exception {
+	public JsonNode getMeetingJson(String meetingId) throws  Exception {
 		ObjectMapper mapper = new ObjectMapper();
 		ObjectNode meetingJson=mapper.createObjectNode();
 		CompletableFuture<Void> meetingFuture=  CompletableFuture.runAsync(()->  {
@@ -99,11 +99,11 @@ public class  MeetingJsonDao {
 		if(Objects.nonNull(speech)) {
 			speechDOs= Arrays.asList(mapper.treeToValue(speech, Speech[].class));
 			if(Objects.nonNull(speechDOs)) {
-				speechDOs.stream().forEach(speech1 -> speech1.setMeetingId(meetingJson.get("meeting").get("id").asInt()));
+				speechDOs.stream().forEach(speech1 -> speech1.setMeetingId(meetingJson.get("meeting").get("id").asText()));
 
 			}
 		}
-		speechDao.addOrupdateSpeech(speechDOs, meetingJson.get("meeting").get("id").asInt());
+		speechDao.addOrupdateSpeech(speechDOs, meetingJson.get("meeting").get("id").asText());
 
 	}
 
@@ -113,10 +113,10 @@ public class  MeetingJsonDao {
 		if(Objects.nonNull(goal)) {
 			goalDOs= Arrays.asList( mapper.treeToValue(goal, Goal[].class));
 			if(Objects.nonNull(goalDOs))
-				goalDOs.stream().forEach(goal1 -> goal1.setMeetingId(meetingJson.get("meeting").get("id").asInt()));
+				goalDOs.stream().forEach(goal1 -> goal1.setMeetingId(meetingJson.get("meeting").get("id").asText()));
 
 		}
-		goalDao.addorUpdateGoal(goalDOs,meetingJson.get("meeting").get("id").asInt());
+		goalDao.addorUpdateGoal(goalDOs,meetingJson.get("meeting").get("id").asText());
 
 
 	}

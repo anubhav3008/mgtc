@@ -30,7 +30,7 @@ public class EmailService {
     @Autowired
     UsersDao usersDao;
     ObjectMapper mapper = new ObjectMapper();
-    public JsonNode sendEmail(int meetingId,List<String> emailIds) throws Exception {
+    public JsonNode sendEmail(String meetingId,List<String> emailIds) throws Exception {
 
         if(emailIds==null || emailIds.isEmpty()){
             emailIds= usersDao.getAllUsers().stream().map(x->x.getEmailId()).collect(Collectors.toList());

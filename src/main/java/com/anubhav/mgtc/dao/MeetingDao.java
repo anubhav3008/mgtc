@@ -30,7 +30,7 @@ public class MeetingDao {
 		MeetingJdbiDao meetingJdbiDao =  getMeetingJdbiDao();
 		return meetingJdbiDao.getAllMeetings();
 	}
-	public Meeting getMeeting(int id) throws NoSuchExtensionException, Exception{
+	public Meeting getMeeting(String id) throws NoSuchExtensionException, Exception{
 		MeetingJdbiDao meetingJdbiDao =  getMeetingJdbiDao();
 		return meetingJdbiDao.getMeeting(id);
 	}
@@ -59,7 +59,7 @@ public class MeetingDao {
 
 		@SqlQuery("select * from meetings where id= :id")
 		@RegisterRowMapper(MeetingMapper.class)
-		public Meeting getMeeting(@Bind("id") int id);
+		public Meeting getMeeting(@Bind("id") String id);
 
 		@SqlUpdate("insert into meetings (id,time,ttm_name,ttm_id,grammarian_name,grammarian_id,ah_counter_name,ah_counter_id,tmod_name,tmod_id,timer_name,timer_id,ge_name,ge_id,theme,venue,date,saa_name,president_name,clubname,vpe_name)" +
 				"values ("

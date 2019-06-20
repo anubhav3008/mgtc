@@ -18,7 +18,7 @@ public class GoalMapper implements RowMapper<Goal> {
 				rs.getString("user_name"), 
 				rs.getString("project_name"), 
 				rs.getDate("date"),
-				rs.getInt("meeting_id"));	
+				rs.getString("meeting_id"));
 	}
 
 }

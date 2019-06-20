@@ -39,7 +39,7 @@ public class AgendaService {
     ImageHelper imageHelper;
     ObjectMapper mapper = new ObjectMapper();
 
-    public byte[] getAgenda(int meetingId) throws Exception {
+    public byte[] getAgenda(String meetingId) throws Exception {
         JsonNode meeting = meetingJsonDao.getMeetingJson(meetingId);
 
         Map<String, String> images= new HashMap<>();

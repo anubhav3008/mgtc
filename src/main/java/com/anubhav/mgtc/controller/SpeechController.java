@@ -25,7 +25,7 @@ public class SpeechController {
 	}
 
 	@RequestMapping(path="",method=RequestMethod.GET)
-	public @ResponseBody JsonNode getSpeechByMeetingId(@RequestParam("meetingId")  int id) {
+	public @ResponseBody JsonNode getSpeechByMeetingId(@RequestParam("meetingId")  String id) {
 		return speechService.getSpeechByMeetingId(id);
 	}
 

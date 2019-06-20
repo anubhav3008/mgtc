@@ -7,7 +7,7 @@ import java.util.Date;
 
 public class Speech {
 	private Integer id;
-	private int meetingId;
+	private String meetingId;
 	private String projectName;
 	private String speakerName;
 	private String speakerId;
@@ -26,10 +26,10 @@ public class Speech {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public int getMeetingId() {
+	public String getMeetingId() {
 		return meetingId;
 	}
-	public void setMeetingId(int meetingId) {
+	public void setMeetingId(String meetingId) {
 		this.meetingId = meetingId;
 	}
 	public String getProjectName() {
@@ -80,7 +80,7 @@ public class Speech {
 	public void setTimeMax(double timeMax) {
 		this.timeMax = timeMax;
 	}
-	public Speech(int id, int meetingId, String projectName, String speakerName, String speakerId, String evaluatorName,
+	public Speech(int id, String meetingId, String projectName, String speakerName, String speakerId, String evaluatorName,
 			String evaluatorId, Date date, double timeMin, double timeMax) {
 		super();
 		this.id = id;

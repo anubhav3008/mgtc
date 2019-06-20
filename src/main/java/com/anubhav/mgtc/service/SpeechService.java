@@ -30,7 +30,7 @@ public class SpeechService {
 		return response;
 	}
 
-	public JsonNode getSpeechByMeetingId(int id) {
+	public JsonNode getSpeechByMeetingId(String id) {
 		ObjectNode response = mapper.createObjectNode();
 		try {
 			response.putPOJO("data", speechDao.getSpeechByMeetingId(id));

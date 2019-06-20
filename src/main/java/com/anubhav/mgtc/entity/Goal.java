@@ -13,11 +13,11 @@ public class Goal {
 	@JsonFormat
 			(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private Date date;
-	private int meetingId;
-	public int getMeetingId() {
+	private String meetingId;
+	public String getMeetingId() {
 		return meetingId;
 	}
-	public void setMeetingId(int meetingId) {
+	public void setMeetingId(String meetingId) {
 		this.meetingId = meetingId;
 	}
 	
@@ -52,7 +52,7 @@ public class Goal {
 		this.date = date;
 	}
 
-	public Goal(int id, String userId, String userName, String projectName, Date date, int meetingId) {
+	public Goal(int id, String userId, String userName, String projectName, Date date, String meetingId) {
 		super();
 		this.id = id;
 		this.userId = userId;

@@ -12,7 +12,7 @@ public class MeetingMapper  implements RowMapper<Meeting>{
 
 	@Override
 	public Meeting map(ResultSet rs, StatementContext ctx) throws SQLException {
-		return new Meeting(rs.getInt("id"),
+		return new Meeting(rs.getString("id"),
 				rs.getString("time"),
 				rs.getDate("date"),
 				rs.getString("ttm_name"), 

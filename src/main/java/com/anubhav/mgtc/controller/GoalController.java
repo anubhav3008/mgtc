@@ -25,7 +25,7 @@ public class GoalController {
 	}
 
 	@RequestMapping(path="", method=RequestMethod.GET)
-	public @ResponseBody JsonNode getGoalByMeetingId(@RequestParam("meetingId") int id) {
+	public @ResponseBody JsonNode getGoalByMeetingId(@RequestParam("meetingId") String id) {
 		return goalService.getGoalByMeetingId(id);
 	}
 

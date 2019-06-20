@@ -23,7 +23,7 @@ public class MeetingController {
 	}
 	
 	@RequestMapping("/{id}")
-	public @ResponseBody JsonNode getMeetingById(@PathVariable("id") int id) {
+	public @ResponseBody JsonNode getMeetingById(@PathVariable("id") String id) {
 		return meetingService.getMeeting(id);
 	}
 	

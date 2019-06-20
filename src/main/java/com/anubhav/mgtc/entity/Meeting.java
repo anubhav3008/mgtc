@@ -1,6 +1,7 @@
 package com.anubhav.mgtc.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.apache.commons.beanutils.converters.StringArrayConverter;
 
 import java.util.Date;
 
@@ -11,7 +12,7 @@ public class Meeting {
 	}
 
 
-	public Meeting(Integer id, String time, Date date, String ttmName, String ttmId, String grammarianName, String grammarianId, String ahCounterName, String ahCounterId, String tmodName, String tmodId, String timerName, String timerId, String geName, String geId, String theme, String venue, String clubName, String saaId, String saaName, String clubId, String presidentId, String presidentName, String vpeId, String vpeName) {
+	public Meeting(String id, String time, Date date, String ttmName, String ttmId, String grammarianName, String grammarianId, String ahCounterName, String ahCounterId, String tmodName, String tmodId, String timerName, String timerId, String geName, String geId, String theme, String venue, String clubName, String saaId, String saaName, String clubId, String presidentId, String presidentName, String vpeId, String vpeName) {
 		this.id = id;
 		this.time = time;
 		this.date = date;
@@ -52,7 +53,7 @@ public class Meeting {
 		this.date = date;
 	}
 
-	private Integer id;
+	private String id;
 	private String time;
 	@JsonFormat
 			(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
@@ -144,10 +145,10 @@ public class Meeting {
 		this.vpeName = vpeName;
 	}
 
-	public Integer getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(Integer id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

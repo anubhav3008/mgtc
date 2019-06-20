@@ -25,9 +25,9 @@ public class GoalDao {
 	private GoalJdbiDao getGoalJdbiDao() throws  Exception {
 		return	jdbiFactoryBean.getObject().onDemand(GoalJdbiDao.class);	
 	}
-	public void addorUpdateGoal(List<Goal> goals, Integer meetingId) throws  Exception {
+	public void addorUpdateGoal(List<Goal> goals, String meetingId) throws  Exception {
 
-				List<Integer> meetingIds=  goals.stream().filter(goal->Objects.nonNull(goal.getMeetingId())).map(Goal::getMeetingId).collect(Collectors.toList());
+				List<String> meetingIds=  goals.stream().filter(goal->Objects.nonNull(goal.getMeetingId())).map(Goal::getMeetingId).collect(Collectors.toList());
 				if(!meetingIds.contains(meetingId)){
 					meetingIds.add(meetingId);
 				}
@@ -36,7 +36,7 @@ public class GoalDao {
 
 	}
 	
-	public List<Goal> getGoalByMeetingId(int id) throws  Exception{
+	public List<Goal> getGoalByMeetingId(String id) throws  Exception{
 		return getGoalJdbiDao().getGoalByMeetingId(id);
 	}
 	
@@ -59,11 +59,11 @@ public class GoalDao {
 		
 		@SqlQuery("select * from goals where meeting_id=:id")
 		@RegisterRowMapper(GoalMapper.class)
-		public List<Goal> getGoalByMeetingId(@Bind("id")int id);
+		public List<Goal> getGoalByMeetingId(@Bind("id")String id);
 
 
 		@SqlBatch("delete from goals where meeting_id = :ids")
-		public int[] deleteGoalsByMeetingId(@Bind("ids") List<Integer> id);
+		public int[] deleteGoalsByMeetingId(@Bind("ids") List<String> id);
 		
 		
 	}
