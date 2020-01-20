@@ -36,7 +36,7 @@ public class UsersDao{
 		@SqlQuery("SELECT * FROM users")
 	    @RegisterRowMapper(UserMapper.class)
 	    public List<User> getAllUsers();
-		@SqlUpdate("insert into users(id,name,is_active) values(:getId,:getName,:getIsActive)")
+		@SqlUpdate("insert into users(id,name,is_active, email) values(:getId,:getName,:getIsActive, :getEmailId )")
 		public int addUser(@BindMethods User user);
 	}
 	
